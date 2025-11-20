@@ -220,7 +220,7 @@ jobs:
           stale_prs=$(gh pr list \
             --repo "${{ github.repository }}" \
             --state open \
-            -- limit 200 \
+            --limit 200 \
             --json number,createdAt \
             --jq ".[] | select((.createdAt | fromdate) < $cutoff) | .number")
 
