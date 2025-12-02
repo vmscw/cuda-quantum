@@ -262,8 +262,7 @@ def ensure_training_data(training_data: str) -> None:
             os.makedirs(os.path.dirname(training_data), exist_ok=True)
             import gdown
 
-            file_id = "1eXIkHTIeQ0gO84fmGwW7cc9s618xsmVR"
-            gdown.download(f"https://drive.google.com/uc?id={file_id}",
+            gdown.download("https://drive.google.com/uc?id=1eXIkHTIeQ0gO84fmGwW7cc9s618xsmVR",
                            training_data,
                            quiet=True)
         else:
