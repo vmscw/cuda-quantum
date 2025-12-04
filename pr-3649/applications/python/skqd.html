@@ -1340,7 +1340,7 @@ Generating Krylov state U^11...
 <p>This substantial acceleration comes from: - <strong>Parallel Pauli string evaluation</strong> across thousands of basis states simultaneously - <strong>Vectorized matrix element computation</strong> leveraging CUDA cores - <strong>GPU-optimized sparse linear algebra</strong> via cuSPARSE library for eigenvalue solving</p>
 <p>The speedup becomes increasingly critical as the Krylov dimension grows, since the computational subspace dimension (and thus the matrix size) scales exponentially with k. For higher k values, GPU acceleration transforms previously intractable postprocessing into feasible computation times.</p>
 <p><strong>Note</strong>: Set <code class="docutils literal notranslate"><span class="pre">use_gpu</span> <span class="pre">=</span> <span class="pre">True</span></code> at the beginning of the notebook to enable GPU acceleration for postprocessing. The quantum circuit simulation uses the NVIDIA target in CUDA-Q regardless of this flag.</p>
-<p><img alt="6f64264b76e9423bab4a14d3ab4e7a77" class="no-scaled-link" src="../../_images/speedup.png" style="width: 600px;" /></p>
+<p><img alt="c2a1fa7c24fb4c018140c65caa60a5b8" class="no-scaled-link" src="../../_images/speedup.png" style="width: 600px;" /></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
