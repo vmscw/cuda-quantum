@@ -1861,7 +1861,7 @@ represented by the node.
     #non_edges=[[u,v] for u in nodes for v in nodes if u<v and [u,v] not in edges]
     #print('Edges: ', edges)
     #print('Non-edges: ', non_edges)
-    #weights=[0.6686,0.6686,0.6686,0.1091,0.0770,0.0770,0.0770,0.0770]
+    #weights=[0.6686,0.6686,0.6686,0.1091,0.0770,0.0770,0.0770,0.1943]
     #penalty=8.0
     #num_layers=8
 :::
