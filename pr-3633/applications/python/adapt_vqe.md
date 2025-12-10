@@ -1777,7 +1777,7 @@ Below is a Schematic depiction of the ADAPT-VQE algorithm
 
 <div>
 
-![ece3349885224c528cb09332f617966e](../../_images/adapt-vqe.png){.no-scaled-link
+![93b84c4234c54eb78fb6ef7a022d3b8a](../../_images/adapt-vqe.png){.no-scaled-link
 style="width: 800px;"}
 
 </div>
