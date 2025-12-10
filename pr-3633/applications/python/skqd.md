@@ -2253,7 +2253,7 @@ beginning of the notebook to enable GPU acceleration for postprocessing.
 The quantum circuit simulation uses the NVIDIA target in CUDA-Q
 regardless of this flag.
 
-![b19f17fdeb334811b7a03f9e63332f6d](../../_images/speedup.png){.no-scaled-link
+![b03ae337363942a595891071e5d0936e](../../_images/speedup.png){.no-scaled-link
 style="width: 600px;"}
 
 ::: {.nbinput .docutils .container}
