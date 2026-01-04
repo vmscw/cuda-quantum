@@ -124,19 +124,24 @@ if $install_prereqs || [ -n "$install_toolchain" ]; then
   source "$this_file_dir/set_env_defaults.sh"
   
   echo "Installing prerequisites..."
-  prereq_args=""
+  # Save and clear positional parameters to avoid passing them to sourced script
+  saved_args=("$@")
   if [ -n "$install_toolchain" ]; then
-    prereq_args="-t $install_toolchain"
+    set -- -t "$install_toolchain"
+  else
+    set --
   fi
   if $verbose; then
-    source "$this_file_dir/install_prerequisites.sh" $prereq_args
+    source "$this_file_dir/install_prerequisites.sh" "$@"
     status=$?
   else
     echo "The install log can be found in `pwd`/logs/prereqs_output.txt."
-    source "$this_file_dir/install_prerequisites.sh" $prereq_args \
+    source "$this_file_dir/install_prerequisites.sh" "$@" \
       2> logs/prereqs_error.txt 1> logs/prereqs_output.txt
     status=$?
   fi
+  # Restore positional parameters
+  set -- "${saved_args[@]}"
 
   if [ "$status" = "" ] || [ ! "$status" -eq "0" ]; then
     echo -e "\e[01;31mError: Failed to install prerequisites.\e[0m" >&2
