@@ -66,26 +66,45 @@ if [ ! -d "$root_folder" ] || [ ! -f "$readme_file" ] ; then
     (return 0 2>/dev/null) && return 100 || exit 100
 fi
 
-# Check that the `cuda_version_conda` is a full version string like "12.8.0"
-if ! [[ $cuda_version_conda =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+# Detect platform
+is_macos=false
+if [ "$(uname)" = "Darwin" ]; then
+    is_macos=true
+    echo "macOS detected: running CPU-only validation"
+fi
+
+# Check that the `cuda_version_conda` is a full version string like "12.8.0" (Linux only)
+if ! $is_macos && ! [[ $cuda_version_conda =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     echo -e "\e[01;31mThe cuda_version_conda (-c) must be a full version string like '12.8.0'. Provided: '${cuda_version_conda}'.\e[0m" >&2
     (return 0 2>/dev/null) && return 100 || exit 100
 fi
 
-# Install Miniconda
+# Install Miniconda 
 if [ ! -x "$(command -v conda)" ]; then
     mkdir -p ~/.miniconda3
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$(uname -m).sh -O ~/.miniconda3/miniconda.sh
+    if $is_macos; then
+        curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-$(uname -m).sh -o ~/.miniconda3/miniconda.sh
+    else
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$(uname -m).sh -O ~/.miniconda3/miniconda.sh
+    fi
     bash ~/.miniconda3/miniconda.sh -b -u -p ~/.miniconda3
     rm -rf ~/.miniconda3/miniconda.sh
     eval "$(~/.miniconda3/bin/conda shell.bash hook)"
 fi
 
 # Execute instructions from the README file
-conda_script="$(awk '/(Begin conda install)/{flag=1;next}/(End conda install)/{flag=0}flag' "$readme_file" | grep . | sed '/^```/d')" 
 if [ -n "${extra_packages}" ]; then 
     pip_extra_arg="--find-links ${extra_packages}"
 fi
+
+if $is_macos; then
+    # macOS: read from macOS-specific section
+    conda_script="$(awk '/(Begin macos install)/{flag=1;next}/(End macos install)/{flag=0}flag' "$readme_file" | grep . | sed '/^```/d')" 
+else
+    # Linux: full conda setup with CUDA
+    conda_script="$(awk '/(Begin conda install)/{flag=1;next}/(End conda install)/{flag=0}flag' "$readme_file" | grep . | sed '/^```/d')" 
+fi
+
 while IFS= read -r line; do
     line=$(echo $line | sed -E "s/cuda_version=(.\{\{)?\s?\S+\s?(\}\})?/cuda_version=${cuda_version_conda} /g")
     line=$(echo $line | sed -E "s/python(=)?3.[0-9]{1,}/python\1${python_version}/g")
@@ -93,26 +112,40 @@ while IFS= read -r line; do
     if [ -n "$(echo $line | grep "conda activate")" ]; then
         conda_env=$(echo "$line" | sed "s#conda activate##" | tr -d '[:space:]')
         source $(conda info --base)/bin/activate $conda_env
+    elif [ -n "$(echo $line | grep "conda create")" ]; then
+        # Skip conda create if environment already exists
+        env_name=$(echo "$line" | grep -oE '\-n\s+[^\s]+' | sed 's/-n //')
+        if ! conda env list | grep -q "$env_name"; then
+            eval "$line"
+        fi
     elif [ -n "$(echo $line | tr -d '[:space:]')" ]; then
         eval "$line"
     fi
 done <<< "$conda_script"
-ompi_script="$(awk '/(Begin ompi setup)/{flag=1;next}/(End ompi setup)/{flag=0}flag' "$readme_file" | grep . | sed '/^```/d')" 
-while IFS= read -r line; do
-    if [ -n "$(echo $line | tr -d '[:space:]')" ]; then
-        eval "$line"
-    fi
-done <<< "$ompi_script"
+
+# Run OpenMPI setup (Linux only)
+if ! $is_macos; then
+    ompi_script="$(awk '/(Begin ompi setup)/{flag=1;next}/(End ompi setup)/{flag=0}flag' "$readme_file" | grep . | sed '/^```/d')" 
+    while IFS= read -r line; do
+        if [ -n "$(echo $line | tr -d '[:space:]')" ]; then
+            eval "$line"
+        fi
+    done <<< "$ompi_script"
+fi
 status_sum=0
 
-# Verify that the necessary GPU targets are installed and usable
-for tgt in nvidia nvidia-fp64 nvidia-mgpu tensornet; do
-    python3 -c "import cudaq; cudaq.set_target('${tgt}')"
-    if [ $? -ne 0 ]; then 
-        echo -e "\e[01;31mPython trivial test for target ${tgt} failed.\e[0m" >&2
-        status_sum=$((status_sum+1))
-    fi
-done
+# Verify that the necessary GPU targets are installed and usable (Linux only)
+if $is_macos; then
+    echo "Skipping GPU target verification on macOS (CPU-only)"
+else
+    for tgt in nvidia nvidia-fp64 nvidia-mgpu tensornet; do
+        python3 -c "import cudaq; cudaq.set_target('${tgt}')"
+        if [ $? -ne 0 ]; then 
+            echo -e "\e[01;31mPython trivial test for target ${tgt} failed.\e[0m" >&2
+            status_sum=$((status_sum+1))
+        fi
+    done
+fi
 
 # Run core tests
 echo "Running core tests."
@@ -151,26 +184,34 @@ for backendTest in "$root_folder/tests/backends"/*.py; do
     fi
 done
 
-# Run platform tests
-echo "Running platform tests."
-for parallelTest in "$root_folder/tests/parallel"/*.py; do 
-    python3 -m pytest -v $parallelTest
-    if [ ! $? -eq 0 ]; then
-        echo -e "\e[01;31mPython platform test $parallelTest failed.\e[0m" >&2
-        status_sum=$((status_sum+1))
-    fi
-done
+# Run platform tests (Linux only - requires MPI)
+if $is_macos; then
+    echo "Skipping parallel/platform tests on macOS (requires MPI)"
+else
+    echo "Running platform tests."
+    for parallelTest in "$root_folder/tests/parallel"/*.py; do 
+        python3 -m pytest -v $parallelTest
+        if [ ! $? -eq 0 ]; then
+            echo -e "\e[01;31mPython platform test $parallelTest failed.\e[0m" >&2
+            status_sum=$((status_sum+1))
+        fi
+    done
+fi
 
 # Run torch integrator tests.
 # This is an optional integrator, which requires torch and torchdiffeq.
-# Install torch separately to match the cuda version.
-# Torch if installed as part of torchdiffeq's dependencies, may default to the latest cuda version. 
-python3 -m pip install torch --index-url https://download.pytorch.org/whl/cu$(echo $cuda_version | cut -d '.' -f-2 | tr -d .)
-python3 -m pip install torchdiffeq
-python3 -m pytest -v "$root_folder/tests/dynamics/integrators"
-if [ ! $? -eq 0 ]; then
-    echo -e "\e[01;31mPython tests failed.\e[0m" >&2
-    status_sum=$((status_sum+1))
+if $is_macos; then
+    echo "Skipping torch GPU integrator tests on macOS (CPU-only)"
+else
+    # Install torch separately to match the cuda version.
+    # Torch if installed as part of torchdiffeq's dependencies, may default to the latest cuda version. 
+    python3 -m pip install torch --index-url https://download.pytorch.org/whl/cu$(echo $cuda_version | cut -d '.' -f-2 | tr -d .)
+    python3 -m pip install torchdiffeq
+    python3 -m pytest -v "$root_folder/tests/dynamics/integrators"
+    if [ ! $? -eq 0 ]; then
+        echo -e "\e[01;31mPython tests failed.\e[0m" >&2
+        status_sum=$((status_sum+1))
+    fi
 fi
 
 # Run snippets in docs
@@ -251,39 +292,43 @@ if [ -d "$root_folder/targets" ]; then
     done
 fi
 
-# Run remote-mqpu platform test
-# Use cudaq-qpud.py wrapper script to automatically find dependencies for the Python wheel configuration.
-# Note that a derivative of this code is in
-# docs/sphinx/using/backends/platform.rst, so if you update it here, you need to
-# check if any docs updates are needed.
-cudaq_package=`python3 -m pip list | grep -oE 'cudaq'`
-cudaq_location=`python3 -m pip show ${cudaq_package} | grep -e 'Location: .*$'`
-qpud_py="${cudaq_location#Location: }/bin/cudaq-qpud.py"
-if [ -x "$(command -v nvidia-smi)" ]; 
-then nr_gpus=`nvidia-smi --list-gpus | wc -l`
-else nr_gpus=0
-fi
-server1_devices=`echo $(seq $((nr_gpus >> 1)) $((nr_gpus - 1))) | tr ' ' ,`
-server2_devices=`echo $(seq 0 $((($nr_gpus >> 1) - 1))) | tr ' ' ,`
-echo "Launching server 1..."
-servers="localhost:12001"
-CUDA_VISIBLE_DEVICES=$server1_devices mpiexec --allow-run-as-root -np 2 python3 "$qpud_py" --port 12001 &
-if [ -n "$server2_devices" ]; then
-    echo "Launching server 2..."
-    servers+=",localhost:12002"
-    CUDA_VISIBLE_DEVICES=$server2_devices mpiexec --allow-run-as-root -np 2 python3 "$qpud_py" --port 12002 &
-fi
+# Run remote-mqpu platform test (Linux only - requires GPU and MPI)
+if $is_macos; then
+    echo "Skipping remote-mqpu platform test on macOS (requires GPU and MPI)"
+else
+    # Use cudaq-qpud.py wrapper script to automatically find dependencies for the Python wheel configuration.
+    # Note that a derivative of this code is in
+    # docs/sphinx/using/backends/platform.rst, so if you update it here, you need to
+    # check if any docs updates are needed.
+    cudaq_package=`python3 -m pip list | grep -oE 'cudaq'`
+    cudaq_location=`python3 -m pip show ${cudaq_package} | grep -e 'Location: .*$'`
+    qpud_py="${cudaq_location#Location: }/bin/cudaq-qpud.py"
+    if [ -x "$(command -v nvidia-smi)" ]; 
+    then nr_gpus=`nvidia-smi --list-gpus | wc -l`
+    else nr_gpus=0
+    fi
+    server1_devices=`echo $(seq $((nr_gpus >> 1)) $((nr_gpus - 1))) | tr ' ' ,`
+    server2_devices=`echo $(seq 0 $((($nr_gpus >> 1) - 1))) | tr ' ' ,`
+    echo "Launching server 1..."
+    servers="localhost:12001"
+    CUDA_VISIBLE_DEVICES=$server1_devices mpiexec --allow-run-as-root -np 2 python3 "$qpud_py" --port 12001 &
+    if [ -n "$server2_devices" ]; then
+        echo "Launching server 2..."
+        servers+=",localhost:12002"
+        CUDA_VISIBLE_DEVICES=$server2_devices mpiexec --allow-run-as-root -np 2 python3 "$qpud_py" --port 12002 &
+    fi
 
-sleep 20 # wait for servers to launch
-python3 "$root_folder/snippets/using/cudaq/platform/sample_async_remote.py" \
-    --backend nvidia-mgpu --servers "$servers"
-if [ ! $? -eq 0 ]; then
-    echo -e "\e[01;31mRemote platform test failed.\e[0m" >&2
-    status_sum=$((status_sum+1))
-fi
-kill %1 && wait %1 2> /dev/null
-if [ -n "$server2_devices" ]; then
-    kill %2 && wait %2 2> /dev/null
+    sleep 20 # wait for servers to launch
+    python3 "$root_folder/snippets/using/cudaq/platform/sample_async_remote.py" \
+        --backend nvidia-mgpu --servers "$servers"
+    if [ ! $? -eq 0 ]; then
+        echo -e "\e[01;31mRemote platform test failed.\e[0m" >&2
+        status_sum=$((status_sum+1))
+    fi
+    kill %1 && wait %1 2> /dev/null
+    if [ -n "$server2_devices" ]; then
+        kill %2 && wait %2 2> /dev/null
+    fi
 fi
 
 if [ ! $status_sum -eq 0 ]; then
