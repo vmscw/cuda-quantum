@@ -69,15 +69,18 @@ CUDA-Q can be built on macOS for development purposes. Note that:
 
 - **CPU-only**: No CUDA/GPU support is available on macOS
 - **Apple Clang**: Uses the system compiler (no need to install GCC or LLVM separately)
-- **Automatic LLVM build**: The build script automatically builds LLVM if not found
+- **Prerequisites required**: You must install prerequisites before building
 
-Run the build script as usual:
+### Building
+
+Run the build script with `-p` to ensure prerequisites are installed:
 
 ```bash
-./scripts/build_cudaq.sh
+./scripts/build_cudaq.sh -p
 ```
 
-The first build takes a while as it builds LLVM from source.
+The first build takes a while as it builds LLVM and other dependencies from source.
+Subsequent builds with `-p` will skip already-installed prerequisites.
 
 ### Manual/Incremental Builds
 

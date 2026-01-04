@@ -9,30 +9,32 @@
 # ============================================================================ #
 
 # Usage:
-# Create a folder with the Python README, the tests, the python examples and snippets, 
-# and run this script passing the path to that folder as well as the path to 
-# the CUDA-Q wheel to test with -f and -w respectively.
-# Check the output for any tests that were skipped.
-
-# E.g. run the command 
-#   source validate_pycudaq.sh -v ${cudaq_version} -i ${package_folder} -f /tmp -p 3.10 -c 11
-# in a container (with GPU support) defined by:
+# Run this script to validate CUDA-Q Python wheel installation.
+# If run from the repo root without -f, test files are auto-detected.
 #
-# ARG base_image=ubuntu:24.04
-# FROM ${base_image}
-# ARG cudaq_version=0.0.0
-# ARG package_folder=/tmp/packages
-# COPY ${package_folder} ${package_folder}
-# COPY scripts/validate_pycudaq.sh validate_pycudaq.sh
-# COPY docs/sphinx/examples/python /tmp/examples/
-# COPY docs/sphinx/snippets/python /tmp/snippets/
-# COPY python/tests /tmp/tests/
-# COPY python/README.md.in /tmp/README.md
-# RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates vim wget openssh-client
-
-# Note: To run the target tests, make sure to set all necessary API keys:
-# COPY docs/sphinx/targets/python /tmp/targets/
-# ENV ...
+# Options:
+#   -f <folder>: Root folder containing README.md, tests/, examples/, snippets/
+#                If not provided, auto-detects from repo structure
+#   -v <version>: CUDA-Q version to install (required)
+#   -c <cuda_version>: Full CUDA version for conda, e.g., "12.8.0" (Linux only)
+#   -i <packages_dir>: Directory containing wheel files (--find-links)
+#   -p <python_version>: Python version (default: 3.11)
+#   -q: Quick test mode (only run core tests)
+#
+# Examples:
+#   # From repo root with auto-detection:
+#   bash scripts/validate_pycudaq.sh -v 0.9.0 -i dist -c 12.6.0
+#
+#   # With custom test folder (CI container):
+#   bash scripts/validate_pycudaq.sh -v 0.9.0 -f /tmp -c 12.6.0
+#
+# For CI containers, copy test files to a single folder:
+#   COPY docs/sphinx/examples/python /tmp/examples/
+#   COPY docs/sphinx/snippets/python /tmp/snippets/
+#   COPY python/tests /tmp/tests/
+#   COPY python/README.md.in /tmp/README.md
+#
+# Note: To run target tests, set the necessary API keys (IONQ_API_KEY, etc.)
 
 __optind__=$OPTIND
 OPTIND=1
@@ -59,12 +61,42 @@ while getopts ":c:f:i:p:qv:" opt; do
 done
 OPTIND=$__optind__
 
+# Auto-detect repo structure if -f not provided
+if [ -z "$root_folder" ]; then
+    # Try to find repo root
+    this_file_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    repo_root=$(cd "$this_file_dir" && git rev-parse --show-toplevel 2>/dev/null)
+    
+    if [ -n "$repo_root" ] && [ -f "$repo_root/python/README.md" ]; then
+        echo "Auto-detecting test files from repo: $repo_root"
+        
+        # Use staging location in repo (gitignored via /*build*/)
+        staging_dir="$repo_root/build/validation"
+        echo "Setting up staging directory: $staging_dir"
+        rm -rf "$staging_dir"
+        mkdir -p "$staging_dir"
+        
+        # Symlink test files to staging (mirrors CI copy structure)
+        ln -sf "$repo_root/python/README.md" "$staging_dir/README.md"
+        ln -sf "$repo_root/python/tests" "$staging_dir/tests"
+        ln -sf "$repo_root/docs/sphinx/examples/python" "$staging_dir/examples"
+        ln -sf "$repo_root/docs/sphinx/snippets/python" "$staging_dir/snippets"
+        if [ -d "$repo_root/docs/sphinx/targets/python" ]; then
+            ln -sf "$repo_root/docs/sphinx/targets/python" "$staging_dir/targets"
+        fi
+        
+        root_folder="$staging_dir"
+    fi
+fi
+
 readme_file="$root_folder/README.md"
 if [ ! -d "$root_folder" ] || [ ! -f "$readme_file" ] ; then
-    ls "$root_folder"
-    echo -e "\e[01;31mDid not find Python root folder. Please pass the folder containing the README and test with -f.\e[0m" >&2
+    ls "$root_folder" 2>/dev/null
+    echo -e "\e[01;31mDid not find Python root folder. Please pass the folder containing the README and tests with -f, or run from repo root.\e[0m" >&2
     (return 0 2>/dev/null) && return 100 || exit 100
 fi
+
+echo "Using test root folder: $root_folder"
 
 # Detect platform
 is_macos=false
