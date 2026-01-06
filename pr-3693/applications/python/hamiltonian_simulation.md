@@ -2084,7 +2084,7 @@ the time evolution.
 ::: {.nbinput .docutils .container}
 ::: {.prompt .highlight-none .notranslate}
 ::: highlight
-    [20]:
+    [ ]:
 :::
 :::
 
@@ -2132,7 +2132,7 @@ the time evolution.
 
     # Initialize and save the initial state
     print ("Initialize state")
-    initial_state = cudaq.get_state(get_initial_state, n_spins)
+    initial_state = cudaq.StateMemoryView(cudaq.get_state(get_initial_state, n_spins))
     state = initial_state
 
     # Store probabilities over time
@@ -2144,7 +2144,7 @@ the time evolution.
     for k in range(1, K):
 
         # Apply single Trotter step
-        state = cudaq.get_state(trotter_step, state, dt, Jx, Jy, Jz, h_x, h_y, h_z, _use_XXYYZZ_gate, coefficients, words)
+        state = cudaq.StateMemoryView(cudaq.get_state(trotter_step, state, dt, Jx, Jy, Jz, h_x, h_y, h_z, _use_XXYYZZ_gate, coefficients, words))
 
         # Calculate probability between initial and current states
         probability = compute_overlap_probability(initial_state, state)
@@ -2214,7 +2214,7 @@ visualize results for expectation value over time.
 ::: {.nbinput .nblast .docutils .container}
 ::: {.prompt .highlight-none .notranslate}
 ::: highlight
-    [22]:
+    [ ]:
 :::
 :::
 
@@ -2227,7 +2227,7 @@ visualize results for expectation value over time.
     start_time = time.time()
     for k in range(1, K):
         # Apply single Trotter step
-        state = cudaq.get_state(trotter_step, state, dt, Jx, Jy, Jz, h_x, h_y, h_z, _use_XXYYZZ_gate, coefficients, words)
+        state = cudaq.StateMemoryView(cudaq.get_state(trotter_step, state, dt, Jx, Jy, Jz, h_x, h_y, h_z, _use_XXYYZZ_gate, coefficients, words))
 
         # Calculate expectation value
         exp_val = cudaq.observe(trotter_step, hamiltonian, state, dt, Jx, Jy, Jz, h_x, h_y, h_z, _use_XXYYZZ_gate, coefficients, words).expectation()

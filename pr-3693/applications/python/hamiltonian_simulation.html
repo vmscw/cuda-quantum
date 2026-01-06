@@ -1223,7 +1223,7 @@
 <h2>Main code<a class="headerlink" href="#Main-code" title="Permalink to this heading">¶</a></h2>
 <p>Import required libraries, set up the simulation parameters, and perform the time evolution.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Required Libraries</span>
@@ -1268,7 +1268,7 @@
 
 <span class="c1"># Initialize and save the initial state</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Initialize state&quot;</span><span class="p">)</span>
-<span class="n">initial_state</span> <span class="o">=</span> <span class="n">cudaq</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="n">get_initial_state</span><span class="p">,</span> <span class="n">n_spins</span><span class="p">)</span>
+<span class="n">initial_state</span> <span class="o">=</span> <span class="n">cudaq</span><span class="o">.</span><span class="n">StateMemoryView</span><span class="p">(</span><span class="n">cudaq</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="n">get_initial_state</span><span class="p">,</span> <span class="n">n_spins</span><span class="p">))</span>
 <span class="n">state</span> <span class="o">=</span> <span class="n">initial_state</span>
 
 <span class="c1"># Store probabilities over time</span>
@@ -1280,7 +1280,7 @@
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
 
     <span class="c1"># Apply single Trotter step</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">cudaq</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="n">trotter_step</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">Jx</span><span class="p">,</span> <span class="n">Jy</span><span class="p">,</span> <span class="n">Jz</span><span class="p">,</span> <span class="n">h_x</span><span class="p">,</span> <span class="n">h_y</span><span class="p">,</span> <span class="n">h_z</span><span class="p">,</span> <span class="n">_use_XXYYZZ_gate</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">cudaq</span><span class="o">.</span><span class="n">StateMemoryView</span><span class="p">(</span><span class="n">cudaq</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="n">trotter_step</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">Jx</span><span class="p">,</span> <span class="n">Jy</span><span class="p">,</span> <span class="n">Jz</span><span class="p">,</span> <span class="n">h_x</span><span class="p">,</span> <span class="n">h_y</span><span class="p">,</span> <span class="n">h_z</span><span class="p">,</span> <span class="n">_use_XXYYZZ_gate</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">words</span><span class="p">))</span>
 
     <span class="c1"># Calculate probability between initial and current states</span>
     <span class="n">probability</span> <span class="o">=</span> <span class="n">compute_overlap_probability</span><span class="p">(</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
@@ -1330,7 +1330,7 @@ Circuit execution time: 0.060 seconds
 <h2>Expectation value over time:<a class="headerlink" href="#Expectation-value-over-time:" title="Permalink to this heading">¶</a></h2>
 <p>Set up the simulation parameters, perform the time evolution, and visualize results for expectation value over time.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize list to store expectation values</span>
@@ -1340,7 +1340,7 @@ Circuit execution time: 0.060 seconds
 <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="c1"># Apply single Trotter step</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">cudaq</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="n">trotter_step</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">Jx</span><span class="p">,</span> <span class="n">Jy</span><span class="p">,</span> <span class="n">Jz</span><span class="p">,</span> <span class="n">h_x</span><span class="p">,</span> <span class="n">h_y</span><span class="p">,</span> <span class="n">h_z</span><span class="p">,</span> <span class="n">_use_XXYYZZ_gate</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">cudaq</span><span class="o">.</span><span class="n">StateMemoryView</span><span class="p">(</span><span class="n">cudaq</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="n">trotter_step</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">Jx</span><span class="p">,</span> <span class="n">Jy</span><span class="p">,</span> <span class="n">Jz</span><span class="p">,</span> <span class="n">h_x</span><span class="p">,</span> <span class="n">h_y</span><span class="p">,</span> <span class="n">h_z</span><span class="p">,</span> <span class="n">_use_XXYYZZ_gate</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">words</span><span class="p">))</span>
 
     <span class="c1"># Calculate expectation value</span>
     <span class="n">exp_val</span> <span class="o">=</span> <span class="n">cudaq</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">trotter_step</span><span class="p">,</span> <span class="n">hamiltonian</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">Jx</span><span class="p">,</span> <span class="n">Jy</span><span class="p">,</span> <span class="n">Jz</span><span class="p">,</span> <span class="n">h_x</span><span class="p">,</span> <span class="n">h_y</span><span class="p">,</span> <span class="n">h_z</span><span class="p">,</span> <span class="n">_use_XXYYZZ_gate</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span><span class="o">.</span><span class="n">expectation</span><span class="p">()</span>
