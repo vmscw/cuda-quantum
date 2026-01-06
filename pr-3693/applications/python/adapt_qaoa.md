@@ -1809,7 +1809,7 @@ explained above.
 
 <div>
 
-![885589eb582243bda1860342fb45d153](../../_images/adapt-qaoa.png){.no-scaled-link
+![a81d4e912ead45d7af0c26750698af56](../../_images/adapt-qaoa.png){.no-scaled-link
 style="width: 1000px;"}
 
 </div>
@@ -2387,7 +2387,7 @@ aria-hidden="true"}](adapt_vqe.html "ADAPT-VQE algorithm"){.btn
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a

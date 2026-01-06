@@ -2282,7 +2282,7 @@ aria-hidden="true"}](qm_mm_pe.html "QM/MM simulation: VQE within a Polarizable E
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a

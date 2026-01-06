@@ -1777,7 +1777,7 @@ Below is a Schematic depiction of the ADAPT-VQE algorithm
 
 <div>
 
-![b728647a5ca7437eb95123c1a8a32701](../../_images/adapt-vqe.png){.no-scaled-link
+![9ed4d31929754ba68d700ba11c6ef8e9](../../_images/adapt-vqe.png){.no-scaled-link
 style="width: 800px;"}
 
 </div>
@@ -2386,7 +2386,7 @@ aria-hidden="true"}](edge_detection.html "Quantum edge detection"){.btn
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a

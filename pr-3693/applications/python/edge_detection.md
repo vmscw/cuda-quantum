@@ -1810,7 +1810,7 @@ each pixel with its position
 
 <div>
 
-![b1b741aa7aee4389801dc2bee2be0a65](../../_images/pixels-img.png){.no-scaled-link
+![7130ea7cec4c4f618aeb637386245f0c](../../_images/pixels-img.png){.no-scaled-link
 style="width: 200px;"}
 
 </div>
@@ -2352,7 +2352,7 @@ aria-hidden="true"}](shors.html "Factoring Integers With Shor’s Algorithm"){.b
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a
