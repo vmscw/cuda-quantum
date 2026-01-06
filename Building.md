@@ -104,7 +104,6 @@ These are handled automatically and require no manual configuration.
 
 ### macOS Limitations
 
-- **Stack size**: macOS has a smaller default stack size (8MB) than Linux. Some
  tests with large stack allocations may fail or be skipped.
 - **Two-level namespace**: macOS binds symbols to specific libraries by default
 , which breaks LLVM/MLIR's static initializer patterns. We use the
@@ -112,6 +111,12 @@ These are handled automatically and require no manual configuration.
  but this can cause collisions with system libraries (e.g., OpenSSL). When
  adding new dependencies, you may need `-Wl,-force_load` or two-level namespace
  linking for specific targets. See `cmake/BuildHelpers.cmake` for examples.
+- **Thread limits**: macOS has lower per-process thread limits (~1392-2088)
+  compared to Linux. Each unique kernel execution creates ~8 threads
+  tied to its MLIR Context. Tests creating many kernels (e.g., dynamics evolution
+  with 100+ time steps) may exhaust this limit, causing
+  `pthread_create failed: Resource temporarily unavailable`.
+  See [Stack Overflow explanation](https://apple.stackexchange.com/questions/373063) for details on macOS threading limitations.
 
 ## Building CUDA-Q with a custom LLVM version
 
