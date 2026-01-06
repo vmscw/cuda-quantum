@@ -56,8 +56,6 @@ else()
     PRIVATE nvqir fmt::fmt-header-only CUDAQTargetConfigUtil)
 endif()
 
-add_lib_loading_macos_workaround(${LIBRARY_NAME} TRUE)
-
 add_subdirectory(qis/managers)
 add_subdirectory(algorithms)
 add_subdirectory(platform)
