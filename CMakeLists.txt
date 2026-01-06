@@ -1,5 +1,5 @@
 # ============================================================================ #
-# Copyright (c) 2022 - 2025 NVIDIA Corporation & Affiliates.                   #
+# Copyright (c) 2022 - 2026 NVIDIA Corporation & Affiliates.                   #
 # All rights reserved.                                                         #
 #                                                                              #
 # This source code and the accompanying materials are made available under     #
@@ -399,7 +399,7 @@ message(STATUS "Using MLIRConfig.cmake in: ${MLIR_DIR}")
 set(CUDAQ_LIBCXX_PATH "${LLVM_BINARY_DIR}/include/c++/v1")
 if(EXISTS "${CUDAQ_LIBCXX_PATH}")
   message(STATUS "Using LLVM libc++ headers: ${CUDAQ_LIBCXX_PATH}")
-  set(CUDAQ_LIBCXX_TARGET_PATH "${LLVM_BINARY_DIR}/include/${LLVM_DEFAULT_TARGET_TRIPLE}/c++/v1")
+  set(CUDAQ_LIBCXX_TARGET_PATH "${LLVM_BINARY_DIR}/include/${LLVM_TARGET_TRIPLE}/c++/v1")
 elseif(CUDAQ_SYSROOT_PATH)
   # Use sysroot (auto-detected on macOS, or user-provided)
   message(STATUS "Using sysroot for C++ headers: ${CUDAQ_SYSROOT_PATH}")
