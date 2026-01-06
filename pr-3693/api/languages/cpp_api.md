@@ -8618,6 +8618,19 @@ aria-hidden="true"}](python_api.html "CUDA-Q Python API"){.btn
         Note: Measurement Syndrome Matrix is defined in
         [https://arxiv.org/pdf/2407.13826](https://arxiv.org/pdf/2407.13826){.reference
         .external}.
+
+    ```{=html}
+    <!-- -->
+    ```
+
+    []{#classcudaq_1_1ExecutionContext_1ad0e38446b94bb1511fecabc7c9c309f2 .target}[[void]{.pre}]{.kt}[ ]{.w}[[\*]{.pre}]{.p}[[[jitEng]{.pre}]{.n}]{.sig-name .descname}[ ]{.w}[[=]{.pre}]{.p}[ ]{.w}[[nullptr]{.pre}]{.k}[¶](#_CPPv4N5cudaq16ExecutionContext6jitEngE "Permalink to this definition"){.headerlink}\
+
+    :   For performance, a launcher may cache the JIT execution engine
+        and use it for multiple discrete calls. This is actually a
+        pointer to a [`mlir::ExecutionEngine`{.docutils .literal
+        .notranslate}]{.pre} object, but we hide that because of
+        problems with the structure and organization of the runtime
+        libraries.
     :::
 
 ```{=html}

@@ -5521,6 +5521,12 @@
 <dd><p>The number of rows and columns of a Measurement Syndrome Matrix. Note: Measurement Syndrome Matrix is defined in <a class="reference external" href="https://arxiv.org/pdf/2407.13826">https://arxiv.org/pdf/2407.13826</a>. </p>
 </dd></dl>
 
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5cudaq16ExecutionContext6jitEngE">
+<span class="target" id="classcudaq_1_1ExecutionContext_1ad0e38446b94bb1511fecabc7c9c309f2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">jitEng</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">nullptr</span></span><a class="headerlink" href="#_CPPv4N5cudaq16ExecutionContext6jitEngE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>For performance, a launcher may cache the JIT execution engine and use it for multiple discrete calls. This is actually a pointer to a <code class="docutils literal notranslate"><span class="pre">mlir::ExecutionEngine</span></code> object, but we hide that because of problems with the structure and organization of the runtime libraries. </p>
+</dd></dl>
+
 </div>
 </dd></dl>
 
