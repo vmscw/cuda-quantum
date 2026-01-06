@@ -1005,23 +1005,6 @@ pr-3553
             -   [Submission from
                 Python](../../using/backends/cloud/braket.html#submission-from-python){.reference
                 .internal}
-        -   [NVIDIA Quantum Cloud
-            (nvqc)](../../using/backends/cloud/nvqc.html){.reference
-            .internal}
-            -   [Quick
-                Start](../../using/backends/cloud/nvqc.html#quick-start){.reference
-                .internal}
-            -   [Simulator Backend
-                Selection](../../using/backends/cloud/nvqc.html#simulator-backend-selection){.reference
-                .internal}
-            -   [Multiple
-                GPUs](../../using/backends/cloud/nvqc.html#multiple-gpus){.reference
-                .internal}
-            -   [Multiple QPUs Asynchronous
-                Execution](../../using/backends/cloud/nvqc.html#multiple-qpus-asynchronous-execution){.reference
-                .internal}
-            -   [FAQ](../../using/backends/cloud/nvqc.html#faq){.reference
-                .internal}
 -   [Dynamics](../../using/dynamics.html){.reference .internal}
     -   [Quick Start](../../using/dynamics.html#quick-start){.reference
         .internal}
@@ -1875,7 +1858,7 @@ number, the result is 0 otherwise 1.
 ::: {#Quantum-oracles .section}
 ## Quantum oracles[¶](#Quantum-oracles "Permalink to this heading"){.headerlink}
 
-![100fcf88fb62405c8074ed0413eb5ea5](../../_images/oracle.png){.no-scaled-link
+![4ace42a1ce3046088ff562ab6e685ec1](../../_images/oracle.png){.no-scaled-link
 style="width: 300px; height: 150px;"}
 
 Suppose we have [\\(f(x): \\{0,1\\} \\longrightarrow \\{0,1\\}\\)]{.math
@@ -1981,7 +1964,7 @@ balanced function? If constant, [\\(f(0) = f(1)\\)]{.math .notranslate
 We step through the circuit diagram below and follow the math after the
 application of each gate.
 
-![3c5de6fce2fa4a18a8b43fcfaebd296d](../../_images/deutsch.png){.no-scaled-link
+![2ccc674dd9684e3e8c7066404cc7de91](../../_images/deutsch.png){.no-scaled-link
 style="width: 500px; height: 210px;"}
 
 ::: {.math .notranslate .nohighlight}
@@ -2196,7 +2179,7 @@ aria-hidden="true"}](divisive_clustering_coresets.html "Divisive Clustering With
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a

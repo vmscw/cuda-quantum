@@ -1011,23 +1011,6 @@ pr-3553
             -   [Submission from
                 Python](../../using/backends/cloud/braket.html#submission-from-python){.reference
                 .internal}
-        -   [NVIDIA Quantum Cloud
-            (nvqc)](../../using/backends/cloud/nvqc.html){.reference
-            .internal}
-            -   [Quick
-                Start](../../using/backends/cloud/nvqc.html#quick-start){.reference
-                .internal}
-            -   [Simulator Backend
-                Selection](../../using/backends/cloud/nvqc.html#simulator-backend-selection){.reference
-                .internal}
-            -   [Multiple
-                GPUs](../../using/backends/cloud/nvqc.html#multiple-gpus){.reference
-                .internal}
-            -   [Multiple QPUs Asynchronous
-                Execution](../../using/backends/cloud/nvqc.html#multiple-qpus-asynchronous-execution){.reference
-                .internal}
-            -   [FAQ](../../using/backends/cloud/nvqc.html#faq){.reference
-                .internal}
 -   [Dynamics](../../using/dynamics.html){.reference .internal}
     -   [Quick Start](../../using/dynamics.html#quick-start){.reference
         .internal}
@@ -2019,7 +2002,7 @@ can imagine them graphed as unit vectors in the positive [\\(y\\)]{.math
 [\\(\|B\\rangle\\)]{.math .notranslate .nohighlight}.
 
 ::: {style="text-align: center;"}
-![7fb949e642da4035af97da677d33dee1](../../_images/grovers-2D-plane.png)
+![d23eb8036df5490388ff8980152ff8cd](../../_images/grovers-2D-plane.png)
 :::
 
 Given that the number of marked states [\\(t\\)]{.math .notranslate
@@ -2234,7 +2217,7 @@ which we will denote by [\\(\\mathcal{G}\\)]{.math .notranslate
 The circuit diagram below puts together steps 1 through 3:
 
 ::: {style="text-align: center;"}
-![8cfeb32c8a3242e5b180fe4ebf8b8d7d](../../_images/grovers-steps1-3.png)
+![7793cdfd16c44a83ae05694554a6c5e6](../../_images/grovers-steps1-3.png)
 :::
 
 Running this circuit initializes [\\(\\ket{\\xi}\\)]{.math .notranslate
@@ -2246,7 +2229,7 @@ from [\\(\|B\\rangle\\)]{.math .notranslate .nohighlight} to
 [\\(\|G\\rangle\\)]{.math .notranslate .nohighlight}.
 
 ::: {style="text-align: center;"}
-![393f7c6dabed4abba783ad3b746d7892](../../_images/grovers-full-rotation.png)
+![89dc6277dacf438fab1d5b5830171a84](../../_images/grovers-full-rotation.png)
 :::
 
 Let's verify that the state resulting from one iteration of Grover's
@@ -2464,7 +2447,7 @@ aria-hidden="true"}](quantum_pagerank.html "Quantum PageRank"){.btn
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a

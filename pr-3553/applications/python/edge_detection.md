@@ -1011,23 +1011,6 @@ pr-3553
             -   [Submission from
                 Python](../../using/backends/cloud/braket.html#submission-from-python){.reference
                 .internal}
-        -   [NVIDIA Quantum Cloud
-            (nvqc)](../../using/backends/cloud/nvqc.html){.reference
-            .internal}
-            -   [Quick
-                Start](../../using/backends/cloud/nvqc.html#quick-start){.reference
-                .internal}
-            -   [Simulator Backend
-                Selection](../../using/backends/cloud/nvqc.html#simulator-backend-selection){.reference
-                .internal}
-            -   [Multiple
-                GPUs](../../using/backends/cloud/nvqc.html#multiple-gpus){.reference
-                .internal}
-            -   [Multiple QPUs Asynchronous
-                Execution](../../using/backends/cloud/nvqc.html#multiple-qpus-asynchronous-execution){.reference
-                .internal}
-            -   [FAQ](../../using/backends/cloud/nvqc.html#faq){.reference
-                .internal}
 -   [Dynamics](../../using/dynamics.html){.reference .internal}
     -   [Quick Start](../../using/dynamics.html#quick-start){.reference
         .internal}
@@ -1827,7 +1810,7 @@ each pixel with its position
 
 <div>
 
-![15cf1e788e094695a565a047c9ceb0d4](../../_images/pixels-img.png){.no-scaled-link
+![3e252622bb9f48a9afeefedb7f27974f](../../_images/pixels-img.png){.no-scaled-link
 style="width: 200px;"}
 
 </div>
@@ -2369,7 +2352,7 @@ aria-hidden="true"}](shors.html "Factoring Integers With Shor’s Algorithm"){.b
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a

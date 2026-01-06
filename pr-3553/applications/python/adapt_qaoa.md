@@ -1012,23 +1012,6 @@ pr-3553
             -   [Submission from
                 Python](../../using/backends/cloud/braket.html#submission-from-python){.reference
                 .internal}
-        -   [NVIDIA Quantum Cloud
-            (nvqc)](../../using/backends/cloud/nvqc.html){.reference
-            .internal}
-            -   [Quick
-                Start](../../using/backends/cloud/nvqc.html#quick-start){.reference
-                .internal}
-            -   [Simulator Backend
-                Selection](../../using/backends/cloud/nvqc.html#simulator-backend-selection){.reference
-                .internal}
-            -   [Multiple
-                GPUs](../../using/backends/cloud/nvqc.html#multiple-gpus){.reference
-                .internal}
-            -   [Multiple QPUs Asynchronous
-                Execution](../../using/backends/cloud/nvqc.html#multiple-qpus-asynchronous-execution){.reference
-                .internal}
-            -   [FAQ](../../using/backends/cloud/nvqc.html#faq){.reference
-                .internal}
 -   [Dynamics](../../using/dynamics.html){.reference .internal}
     -   [Quick Start](../../using/dynamics.html#quick-start){.reference
         .internal}
@@ -1826,7 +1809,7 @@ explained above.
 
 <div>
 
-![a6bf02b11f1842b7ba1017c97387f070](../../_images/adapt-qaoa.png){.no-scaled-link
+![e87d7839b5bd42c6b189c8904a62a192](../../_images/adapt-qaoa.png){.no-scaled-link
 style="width: 1000px;"}
 
 </div>
@@ -2404,7 +2387,7 @@ aria-hidden="true"}](adapt_vqe.html "ADAPT-VQE algorithm"){.btn
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a

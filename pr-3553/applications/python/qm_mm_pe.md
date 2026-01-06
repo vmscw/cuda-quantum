@@ -1009,23 +1009,6 @@ pr-3553
             -   [Submission from
                 Python](../../using/backends/cloud/braket.html#submission-from-python){.reference
                 .internal}
-        -   [NVIDIA Quantum Cloud
-            (nvqc)](../../using/backends/cloud/nvqc.html){.reference
-            .internal}
-            -   [Quick
-                Start](../../using/backends/cloud/nvqc.html#quick-start){.reference
-                .internal}
-            -   [Simulator Backend
-                Selection](../../using/backends/cloud/nvqc.html#simulator-backend-selection){.reference
-                .internal}
-            -   [Multiple
-                GPUs](../../using/backends/cloud/nvqc.html#multiple-gpus){.reference
-                .internal}
-            -   [Multiple QPUs Asynchronous
-                Execution](../../using/backends/cloud/nvqc.html#multiple-qpus-asynchronous-execution){.reference
-                .internal}
-            -   [FAQ](../../using/backends/cloud/nvqc.html#faq){.reference
-                .internal}
 -   [Dynamics](../../using/dynamics.html){.reference .internal}
     -   [Quick Start](../../using/dynamics.html#quick-start){.reference
         .internal}
@@ -1785,7 +1768,7 @@ mutual polarization.
 
 <div>
 
-![9d4f8811b7904e698138d65f779cd160](../../_images/qm-mm-pe.png){.no-scaled-link
+![9416e3e87103460daddd11fc3fc3be81](../../_images/qm-mm-pe.png){.no-scaled-link
 style="width: 600px;"}
 
 </div>
@@ -2535,7 +2518,7 @@ aria-hidden="true"}](skqd.html "Sample-Based Krylov Quantum Diagonalization (SKQ
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a

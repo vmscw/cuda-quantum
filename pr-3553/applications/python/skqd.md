@@ -1011,23 +1011,6 @@ pr-3553
             -   [Submission from
                 Python](../../using/backends/cloud/braket.html#submission-from-python){.reference
                 .internal}
-        -   [NVIDIA Quantum Cloud
-            (nvqc)](../../using/backends/cloud/nvqc.html){.reference
-            .internal}
-            -   [Quick
-                Start](../../using/backends/cloud/nvqc.html#quick-start){.reference
-                .internal}
-            -   [Simulator Backend
-                Selection](../../using/backends/cloud/nvqc.html#simulator-backend-selection){.reference
-                .internal}
-            -   [Multiple
-                GPUs](../../using/backends/cloud/nvqc.html#multiple-gpus){.reference
-                .internal}
-            -   [Multiple QPUs Asynchronous
-                Execution](../../using/backends/cloud/nvqc.html#multiple-qpus-asynchronous-execution){.reference
-                .internal}
-            -   [FAQ](../../using/backends/cloud/nvqc.html#faq){.reference
-                .internal}
 -   [Dynamics](../../using/dynamics.html){.reference .internal}
     -   [Quick Start](../../using/dynamics.html#quick-start){.reference
         .internal}
@@ -2270,7 +2253,18 @@ beginning of the notebook to enable GPU acceleration for postprocessing.
 The quantum circuit simulation uses the NVIDIA target in CUDA-Q
 regardless of this flag.
 
-![33a02b5207894189ad1d82baaaabebda](../../_images/speedup.png){.no-scaled-link
+The data in the plot below was gathered by averaging over 5 runs on a
+NVIDIA H100 GPU and an Intel Xeon Platinum 8480CL CPU with 224 threads.
+The only thing that changed between the 2 data points was
+[`use_gpu`{.docutils .literal .notranslate}]{.pre}` `{.docutils .literal
+.notranslate}[`=`{.docutils .literal .notranslate}]{.pre}` `{.docutils
+.literal .notranslate}[`True`{.docutils .literal .notranslate}]{.pre}
+and [`use_gpu`{.docutils .literal .notranslate}]{.pre}` `{.docutils
+.literal .notranslate}[`=`{.docutils .literal
+.notranslate}]{.pre}` `{.docutils .literal
+.notranslate}[`False`{.docutils .literal .notranslate}]{.pre}.
+
+![9beb6835478f44dfb25846b55444cbd5](../../_images/speedup.png){.no-scaled-link
 style="width: 600px;"}
 
 ::: {.nbinput .docutils .container}
@@ -2314,7 +2308,7 @@ aria-hidden="true"}](entanglement_acc_hamiltonian_simulation.html "Entanglement 
 ------------------------------------------------------------------------
 
 ::: {role="contentinfo"}
-© Copyright 2025, NVIDIA Corporation & Affiliates.
+© Copyright 2026, NVIDIA Corporation & Affiliates.
 :::
 
 Built with [Sphinx](https://www.sphinx-doc.org/) using a
