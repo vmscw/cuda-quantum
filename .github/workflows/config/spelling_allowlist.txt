@@ -351,6 +351,7 @@ subtypes
 subtyping
 summarize
 superpositions
+symlinks
 symplectic
 tablegen
 templated
