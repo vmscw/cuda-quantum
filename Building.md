@@ -116,7 +116,8 @@ These are handled automatically and require no manual configuration.
   tied to its MLIR Context. Tests creating many kernels (e.g., dynamics evolution
   with 100+ time steps) may exhaust this limit, causing
   `pthread_create failed: Resource temporarily unavailable`.
-  See [Stack Overflow explanation](https://apple.stackexchange.com/questions/373063) for details on macOS threading limitations.
+  If this occurs, reduce concurrent kernels or raise limits via
+  `ulimit -u` / `launchctl limit maxthreads`.
 
 ## Building CUDA-Q with a custom LLVM version
 
