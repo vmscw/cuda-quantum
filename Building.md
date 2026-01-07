@@ -72,7 +72,7 @@ CUDA-Q can be built on macOS for development purposes. Note that:
 - **Prerequisites required**: You must use `-p` to install LLVM and other dependencies
 
 Before building, complete the macOS setup steps in
-[`Dev_Setup.md`](./Dev_Setup.md#working-on-macos). 
+[`Dev_Setup.md`](./Dev_Setup.md#working-on-macos).
 
 ### Building
 
@@ -107,7 +107,8 @@ These are handled automatically and require no manual configuration.
 
 ### macOS Limitations
 
- tests with large stack allocations may fail or be skipped.
+Tests with large stack allocations may fail or be skipped.
+
 - **Two-level namespace**: macOS binds symbols to specific libraries by default
 , which breaks LLVM/MLIR's static initializer patterns. We use the
 `flat_namespace` linker option as a workaround to enable global symbol sharing,
