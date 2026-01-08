@@ -8,6 +8,8 @@
 
 namespace cudaq {
 
+// Pass registration is done through the 'register_dialect' python call.
+// The native target initialization is built into the MLIR python extension.
 void initializeLangMLIR() {}
 
 } // namespace cudaq
