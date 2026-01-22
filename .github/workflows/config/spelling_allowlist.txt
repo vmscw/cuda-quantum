@@ -318,6 +318,7 @@ runtimes
 rvalue
 scalability
 scalable
+Scaleway
 selectable
 sexualized
 shifter
